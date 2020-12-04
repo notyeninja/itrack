@@ -11,6 +11,18 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'tracking',
+    loadChildren: () => import('./tracking/tracking.module').then( m => m.TrackingPageModule)
+  },
+  {
+    path: 'track-result',
+    loadChildren: () => import('./track-result/track-result.module').then( m => m.TrackResultPageModule)
+  },
+  {
+    path: 'error',
+    loadChildren: () => import('./error/error.module').then( m => m.ErrorPageModule)
+  },
 ];
 
 @NgModule({
