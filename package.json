@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "npx jetify"
+    "postinstall": "npx jetify",
+    "buildcopy": "ng build && npx cap copy"
   },
   "private": true,
   "dependencies": {
