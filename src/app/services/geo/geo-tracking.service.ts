@@ -16,6 +16,8 @@ export class GeoTrackingService {
   private config: BackgroundGeolocationConfig = {
     locationProvider: BackgroundGeolocationLocationProvider.ACTIVITY_PROVIDER,
     desiredAccuracy: 10,
+    stationaryRadius: 50,
+    distanceFilter: 300,
     notificationTitle: "iNative Running",
     notificationText: "Keeping track of things.",
     debug: true,
@@ -58,7 +60,7 @@ export class GeoTrackingService {
       this.backgrounGeoLocation
         .on(BackgroundGeolocationEvents.error)
         .subscribe((err) => {
-          this.dbService.insertError(err);
+          this.dbService.insertError(JSON.stringify(err));
         });
 
       this.backgrounGeoLocation

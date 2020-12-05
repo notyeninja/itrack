@@ -8,6 +8,7 @@ import { DbService } from "../services/db/db.service";
 })
 export class HomePage {
   constructor(private dbStore: DbService) {}
+
   async cleanStore() {
     await this.dbStore.cleanData();
   }

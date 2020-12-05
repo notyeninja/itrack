@@ -114,12 +114,9 @@ export class DbService {
 
   async cleanData(): Promise<any> {
     try {
-      return await this.db.executeSql(
-        "delete from test; delete from error",
-        []
-      );
-    } catch (err) {
-      console.log(err);
-    }
+      await this.db.executeSql("delete from test;", []);
+
+      return await this.db.executeSql("delete from error;", []);
+    } catch (err) {}
   }
 }
