@@ -24,6 +24,7 @@ export class GeoTrackingService {
     interval: 15000,
     fastestInterval: 15000,
     activitiesInterval: 20000,
+    stopOnTerminate: true,
   };
 
   constructor(
