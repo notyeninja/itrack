@@ -16,16 +16,16 @@ export class GeoTrackingService {
   private config: BackgroundGeolocationConfig = {
     locationProvider: BackgroundGeolocationLocationProvider.RAW_PROVIDER,
     desiredAccuracy: 10,
-    stationaryRadius: 10,
-    distanceFilter: 10,
+    stationaryRadius: 100,
+    distanceFilter: 50,
     notificationTitle: "iNative Running",
     notificationText: "Keeping track of things.",
-    debug: true,
-    interval: 5000,
-    fastestInterval: 10000,
-    activitiesInterval: 5000,
+    debug: false,
+    interval: 15000,
+    fastestInterval: 15000,
+    activitiesInterval: 15000,
     stopOnTerminate: true,
-    stopOnStillActivity: false,
+    stopOnStillActivity: true,
   };
 
   constructor(
