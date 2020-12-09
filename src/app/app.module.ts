@@ -12,6 +12,7 @@ import { DbService } from "./services/db/db.service";
 import { BackgroundGeolocation } from "@ionic-native/background-geolocation/ngx";
 import { DeviceMotion } from "@ionic-native/device-motion/ngx";
 import { SQLite } from "@ionic-native/sqlite/ngx";
+import { AndroidPermissions } from "@ionic-native/android-permissions/ngx";
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { SQLite } from "@ionic-native/sqlite/ngx";
     BackgroundGeolocation,
     DeviceMotion,
     SQLite,
+    AndroidPermissions,
   ],
   bootstrap: [AppComponent],
 })

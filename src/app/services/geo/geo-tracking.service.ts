@@ -14,17 +14,18 @@ import { DeviceMotion } from "@ionic-native/device-motion/ngx";
 })
 export class GeoTrackingService {
   private config: BackgroundGeolocationConfig = {
-    locationProvider: BackgroundGeolocationLocationProvider.ACTIVITY_PROVIDER,
+    locationProvider: BackgroundGeolocationLocationProvider.RAW_PROVIDER,
     desiredAccuracy: 10,
     stationaryRadius: 50,
     distanceFilter: 300,
     notificationTitle: "iNative Running",
     notificationText: "Keeping track of things.",
-    debug: true,
-    interval: 15000,
+    debug: false,
+    interval: 5000,
     fastestInterval: 15000,
-    activitiesInterval: 20000,
+    activitiesInterval: 5000,
     stopOnTerminate: true,
+    // stopOnStillActivity: false,
   };
 
   constructor(
