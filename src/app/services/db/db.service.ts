@@ -36,6 +36,15 @@ export class DbService {
                               error text)`
           )
           .catch((e) => console.log(e));
+
+        this.db
+          .executeSql(
+            `
+        create table if not exists logs(id integer primary key autoincrement not null,
+            log text)
+      `
+          )
+          .catch((e) => console.log(e));
       })
       .catch((e) => console.log(e));
   }
@@ -86,6 +95,37 @@ export class DbService {
     }
 
     return true;
+  }
+
+  async insertLogs(log: any): Promise<boolean> {
+    try {
+      log = JSON.stringify(log);
+      const result = await this.db.executeSql(
+        `insert into logs(log) values (?)`,
+        [log]
+      );
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+
+    return true;
+  }
+
+  async getLogs(): Promise<any> {
+    try {
+      let logs = await this.db.executeSql(`select * from logs`, []);
+      let data = [];
+      for (let i = 0; i < logs.rows.length; i++) {
+        data.push({
+          id: logs.rows.item(i).id,
+          logs: logs.rows.item(i).log,
+        });
+      }
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async getErrors(): Promise<any> {

@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>logs</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button class="ion-margin-top" color="primary" (click)="getLogs()" expand="full">Get Logs</ion-button>
+
+  <ion-list>
+    <ion-item *ngFor="let log of logs">
+      <ion-label>
+        {{ log.logs | json}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

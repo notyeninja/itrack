@@ -14,18 +14,20 @@ import { DeviceMotion } from "@ionic-native/device-motion/ngx";
 })
 export class GeoTrackingService {
   private config: BackgroundGeolocationConfig = {
-    locationProvider: BackgroundGeolocationLocationProvider.RAW_PROVIDER,
-    desiredAccuracy: 10,
-    stationaryRadius: 50,
-    distanceFilter: 50,
+    locationProvider:
+      BackgroundGeolocationLocationProvider.DISTANCE_FILTER_PROVIDER,
+    desiredAccuracy: 0,
+    stationaryRadius: 20,
+    distanceFilter: 20,
     notificationTitle: "iNative Running",
     notificationText: "Keeping track of things.",
-    debug: false,
-    interval: 5000,
+    debug: true,
+    interval: 2000,
     fastestInterval: 5000,
     activitiesInterval: 5000,
     stopOnTerminate: true,
     stopOnStillActivity: true,
+    startForeground: true,
   };
 
   constructor(
@@ -56,6 +58,11 @@ export class GeoTrackingService {
             this.dbService.insertTestData(dataToSave);
           });
 
+          this.dbService.insertLogs({
+            log: `sending insert to database`,
+            time: Date.now(),
+          });
+          this.dbService.insertTestData(dataToSave);
           this.backgrounGeoLocation.finish();
         });
 

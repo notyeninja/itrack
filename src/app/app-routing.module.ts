@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'error',
     loadChildren: () => import('./error/error.module').then( m => m.ErrorPageModule)
   },
+  {
+    path: 'logs',
+    loadChildren: () => import('./logs/logs.module').then( m => m.LogsPageModule)
+  },
 ];
 
 @NgModule({
