@@ -13,12 +13,13 @@ import { DeviceMotion } from "@ionic-native/device-motion/ngx";
   providedIn: "root",
 })
 export class GeoTrackingService {
+  private aQueue = [];
   private config: BackgroundGeolocationConfig = {
     locationProvider:
       BackgroundGeolocationLocationProvider.DISTANCE_FILTER_PROVIDER,
     desiredAccuracy: 0,
-    stationaryRadius: 20,
-    distanceFilter: 20,
+    stationaryRadius: 5,
+    distanceFilter: 5,
     notificationTitle: "iNative Running",
     notificationText: "Keeping track of things.",
     debug: true,
@@ -26,7 +27,7 @@ export class GeoTrackingService {
     fastestInterval: 5000,
     activitiesInterval: 5000,
     stopOnTerminate: true,
-    stopOnStillActivity: true,
+    stopOnStillActivity: false,
     startForeground: true,
   };
 
@@ -43,24 +44,13 @@ export class GeoTrackingService {
         .subscribe((location: BackgroundGeolocationResponse) => {
           let dataToSave = {
             displacement: null,
-            position: {
-              lat: location.latitude,
-              lng: location.longitude,
-              altitude: location.altitude,
-              bearing: location.bearing,
-              speed: location.speed,
-              timestamp: location.time,
-            },
+            position: location,
           };
 
           this.devicemotion.getCurrentAcceleration().then((v) => {
             dataToSave.displacement = v;
             this.dbService.insertTestData(dataToSave);
-          });
-
-          this.dbService.insertLogs({
-            log: `sending insert to database`,
-            time: Date.now(),
+            //this.aQueue.push(dataToSave);
           });
           this.dbService.insertTestData(dataToSave);
           this.backgrounGeoLocation.finish();

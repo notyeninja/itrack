@@ -155,7 +155,7 @@ export class DbService {
   async cleanData(): Promise<any> {
     try {
       await this.db.executeSql("delete from test;", []);
-
+      await this.db.executeSql("delete from logs;", []);
       return await this.db.executeSql("delete from error;", []);
     } catch (err) {}
   }
