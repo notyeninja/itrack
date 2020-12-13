@@ -1,4 +1,6 @@
 import { Injectable } from "@angular/core";
+import { OnPageDisplayService } from "../on-page-display.service";
+
 import {
   BackgroundGeolocation,
   BackgroundGeolocationConfig,
@@ -15,16 +17,15 @@ import { DeviceMotion } from "@ionic-native/device-motion/ngx";
 export class GeoTrackingService {
   private aQueue = [];
   private config: BackgroundGeolocationConfig = {
-    locationProvider:
-      BackgroundGeolocationLocationProvider.DISTANCE_FILTER_PROVIDER,
+    locationProvider: BackgroundGeolocationLocationProvider.ACTIVITY_PROVIDER,
     desiredAccuracy: 0,
     stationaryRadius: 5,
     distanceFilter: 5,
     notificationTitle: "iNative Running",
     notificationText: "Keeping track of things.",
     debug: true,
-    interval: 2000,
-    fastestInterval: 5000,
+    interval: 5000,
+    fastestInterval: 10000,
     activitiesInterval: 5000,
     stopOnTerminate: true,
     stopOnStillActivity: false,
@@ -34,7 +35,8 @@ export class GeoTrackingService {
   constructor(
     private backgrounGeoLocation: BackgroundGeolocation,
     private dbService: DbService,
-    private devicemotion: DeviceMotion
+    private devicemotion: DeviceMotion,
+    private onPageService: OnPageDisplayService
   ) {}
 
   init() {
@@ -49,9 +51,13 @@ export class GeoTrackingService {
 
           this.devicemotion.getCurrentAcceleration().then((v) => {
             dataToSave.displacement = v;
+            this.aQueue.push(dataToSave);
+            //  this.onPageService.nextItem(this.aQueue);
             this.dbService.insertTestData(dataToSave);
-            //this.aQueue.push(dataToSave);
           });
+
+          this.aQueue.push(dataToSave);
+          //this.onPageService.nextItem(this.aQueue);
           this.dbService.insertTestData(dataToSave);
           this.backgrounGeoLocation.finish();
         });
@@ -71,10 +77,15 @@ export class GeoTrackingService {
   }
 
   startTracing() {
+    this.aQueue = [];
     this.backgrounGeoLocation.start();
   }
 
   stopTracing() {
     this.backgrounGeoLocation.stop();
+  }
+
+  getRecords() {
+    return this.aQueue.length;
   }
 }
